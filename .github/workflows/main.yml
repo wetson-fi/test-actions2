@@ -20,6 +20,7 @@ jobs:
           echo "- message: ${{ inputs.message }}" >> $GITHUB_STEP_SUMMARY
       
   greet:
+    needs: [print-inputs]
     runs-on: ubuntu-latest
 
     steps:
