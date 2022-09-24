@@ -7,8 +7,6 @@ on:
         required: true
       environment:
         type: environment
-        required: true
-
 jobs:
   print-inputs:
     runs-on: ubuntu-latest
@@ -22,7 +20,7 @@ jobs:
   greet:
     needs: [print-inputs]
     runs-on: ubuntu-latest
-
+    environment: ${{ inputs.environment }}
     steps:
     - name: Send greeting
       run: echo "${{ github.event.inputs.message }}"
