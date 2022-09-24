@@ -3,24 +3,25 @@ name: Mixed inputs
 on:
   workflow_dispatch:
     inputs:
-      name:
-        type: choice
-        description: Who to greet
-        options: 
-        - monalisa
-        - cschleiden
       message:
         required: true
-      use-emoji:
-        type: boolean
-        description: Include  emojis
       environment:
         type: environment
+        required: true
 
 jobs:
+  print-inputs:
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      - name: job summary
+        run: |
+          echo "### inputs" >> $GITHUB_STEP_SUMMARY
+          echo "- message: ${{ inputs.message }}" >> $GITHUB_STEP_SUMMARY
+      
   greet:
     runs-on: ubuntu-latest
 
     steps:
     - name: Send greeting
-      run: echo "${{ github.event.inputs.message }} ${{ fromJSON('["", ""]')[github.event.inputs.use-emoji == 'true'] }} ${{ github.event.inputs.name }} ${{ github.event.inputs.environment }}"
+      run: echo "${{ github.event.inputs.message }}"
